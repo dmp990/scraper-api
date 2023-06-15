@@ -21,8 +21,13 @@ exports.fetchDistance = ({ postcode }) => {
         dentists.push({ item });
       });
 
-      const first = dentists[0].item;
-      const second = dentists[1].item;
+      if (dentists.length === 0) {
+        return Promise.resolve({ error: `Cannot find ${postcode}` });
+      }
+
+      let first, second;
+      if (dentists[0].item !== undefined) first = dentists[0].item;
+      if (dentists[1].item !== undefined) second = dentists[1].item;
 
       return [first, second];
     })
